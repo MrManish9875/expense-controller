@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Expense & Saving Predictor</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Login/Register Container -->
+    <div id="auth-container" class="auth-container">
+        <div class="auth-box">
+            <h1 class="auth-title">💰 Smart Expense & Saving Predictor</h1>
+            
+            <!-- Login Form -->
+            <div id="login-form" class="auth-form active">
+                <h2>Login</h2>
+                <div class="form-group">
+                    <label for="login-username">Username</label>
+                    <input type="text" id="login-username" placeholder="Enter username">
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" placeholder="Enter password">
+                </div>
+                <button onclick="login()" class="btn btn-primary">Login</button>
+                <p class="auth-switch">Don't have an account? <a href="#" onclick="showRegister()">Register</a></p>
+            </div>
+
+            <!-- Register Form -->
+            <div id="register-form" class="auth-form">
+                <h2>Create Account</h2>
+                <div class="form-group">
+                    <label for="reg-username">Username</label>
+                    <input type="text" id="reg-username" placeholder="Choose username">
+                </div>
+                <div class="form-group">
+                    <label for="reg-password">Password</label>
+                    <input type="password" id="reg-password" placeholder="Create password">
+                </div>
+                <div class="form-group">
+                    <label for="reg-email">Email</label>
+                    <input type="email" id="reg-email" placeholder="Enter email">
+                </div>
+                <div class="form-group">
+                    <label for="reg-income">Monthly Income (₹)</label>
+                    <input type="number" id="reg-income" placeholder="Enter monthly income">
+                </div>
+                <button onclick="register()" class="btn btn-success">Register</button>
+                <p class="auth-switch">Already have an account? <a href="#" onclick="showLogin()">Login</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Dashboard (Hidden by default) -->
+    <div id="main-dashboard" class="dashboard-container" style="display: none;">
+        <!-- Top Navigation -->
+        <nav class="navbar">
+            <div class="nav-brand">💰 Expense Predictor</div>
+            <div class="nav-user">
+                <span id="welcome-user">Welcome, User!</span>
+                <button onclick="logout()" class="btn-logout"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            </div>
+        </nav>
+
+        <!-- Tab Navigation -->
+        <div class="tab-container">
+            <button class="tab-btn active" onclick="switchTab('expense')">
+                <i class="fas fa-plus-circle"></i> Add Expense
+            </button>
+            <button class="tab-btn" onclick="switchTab('dashboard')">
+                <i class="fas fa-chart-pie"></i> Dashboard
+            </button>
+            <button class="tab-btn" onclick="switchTab('predictor')">
+                <i class="fas fa-chart-line"></i> Predictor
+            </button>
+            <button class="tab-btn" onclick="switchTab('reports')">
+                <i class="fas fa-file-pdf"></i> Reports
+            </button>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="content-area">
+            <!-- Expense Tab -->
+            <div id="expense-tab" class="tab-pane active">
+                <div class="split-view">
+                    <!-- Add Transaction Form -->
+                    <div class="form-card">
+                        <h3><i class="fas fa-plus-circle"></i> Add New Transaction</h3>
+                        <div class="form-group">
+                            <label>Type</label>
+                            <select id="trans-type">
+                                <option value="expense">Expense</option>
+                                <option value="income">Income</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Category</label>
+                            <select id="category">
+                                <option value="Food">Food</option>
+                                <option value="Travel">Travel</option>
+                                <option value="Rent">Rent</option>
+                                <option value="Education">Education</option>
+                                <option value="Entertainment">Entertainment</option>
+                                <option value="Shopping">Shopping</option>
+                                <option value="Bills">Bills</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Amount (₹)</label>
+                            <input type="number" id="amount" placeholder="Enter amount">
+                        </div>
+                        <div class="form-group">
+                            <label>Date</label>
+                            <input type="date" id="trans-date">
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea id="description" rows="3" placeholder="Enter description"></textarea>
+                        </div>
+                        <button onclick="addTransaction()" class="btn btn-primary btn-block">
+                            <i class="fas fa-save"></i> Add Transaction
+                        </button>
+                    </div>
+
+                    <!-- Recent Transactions -->
+                    <div class="transactions-card">
+                        <h3><i class="fas fa-history"></i> Recent Transactions</h3>
+                        <div class="table-container">
+                            <table id="transactions-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Type</th>
+                                        <th>Category</th>
+                                        <th>Amount</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="transactions-body">
+                                    <!-- Transactions will be inserted here -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <button onclick="loadTransactions()" class="btn btn-success btn-sm">
+                            <i class="fas fa-sync-alt"></i> Refresh
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Tab -->
+            <div id="dashboard-tab" class="tab-pane">
+                <div class="summary-cards">
+                    <div class="card income-card">
+                        <div class="card-icon"><i class="fas fa-arrow-down"></i></div>
+                        <div class="card-content">
+                            <h4>Total Income</h4>
+                            <p id="total-income">₹0.00</p>
+                        </div>
+                    </div>
+                    <div class="card expense-card">
+                        <div class="card-icon"><i class="fas fa-arrow-up"></i></div>
+                        <div class="card-content">
+                            <h4>Total Expense</h4>
+                            <p id="total-expense">₹0.00</p>
+                        </div>
+                    </div>
+                    <div class="card balance-card">
+                        <div class="card-icon"><i class="fas fa-wallet"></i></div>
+                        <div class="card-content">
+                            <h4>Current Balance</h4>
+                            <p id="balance">₹0.00</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <h3><i class="fas fa-chart-pie"></i> Category-wise Expenses</h3>
+                    <canvas id="expense-chart"></canvas>
+                </div>
+            </div>
+
+            <!-- Predictor Tab -->
+            <div id="predictor-tab" class="tab-pane">
+                <div class="predictor-card">
+                    <h3><i class="fas fa-chart-line"></i> Future Savings Prediction</h3>
+                    <div class="predictions" id="predictions">
+                        <!-- Predictions will be inserted here -->
+                    </div>
+                    
+                    <div id="warning-message" class="warning-message" style="display: none;">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        WARNING: You're spending more than your income!
+                    </div>
+
+                    <div class="tips-section">
+                        <h4><i class="fas fa-lightbulb"></i> Saving Tips</h4>
+                        <ul class="tips-list">
+                            <li>Track your daily expenses to identify unnecessary spending</li>
+                            <li>Set a monthly budget and stick to it</li>
+                            <li>Save at least 20% of your income each month</li>
+                            <li>Look for discounts and offers while shopping</li>
+                            <li>Avoid impulse purchases</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reports Tab -->
+            <div id="reports-tab" class="tab-pane">
+                <div class="reports-card">
+                    <h3><i class="fas fa-file-pdf"></i> Generate Report</h3>
+                    
+                    <div class="report-controls">
+                        <div class="form-group">
+                            <label>Select Month</label>
+                            <select id="report-month">
+                                <option value="January">January</option>
+                                <option value="February">February</option>
+                                <option value="March">March</option>
+                                <option value="April">April</option>
+                                <option value="May">May</option>
+                                <option value="June">June</option>
+                                <option value="July">July</option>
+                                <option value="August">August</option>
+                                <option value="September">September</option>
+                                <option value="October">October</option>
+                                <option value="November">November</option>
+                                <option value="December">December</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Year</label>
+                            <input type="number" id="report-year" value="2024">
+                        </div>
+                        <button onclick="generateReport()" class="btn btn-primary">
+                            <i class="fas fa-download"></i> Generate PDF Report
+                        </button>
+                    </div>
+
+                    <div class="report-preview">
+                        <h4>Report Preview</h4>
+                        <pre id="report-preview"></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Include jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+    <!-- Main JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
