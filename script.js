@@ -501,7 +501,7 @@ function generateReport() {
         // Title
         doc.setFontSize(20);
         doc.setTextColor(102, 126, 234);
-        doc.text('Smart Expense & Saving Predictor', 105, 20, { align: 'center' });
+        doc.text('Smar Expense & Saving Predictor', 105, 20, { align: 'center' });
         
         doc.setFontSize(16);
         doc.setTextColor(0, 0, 0);
