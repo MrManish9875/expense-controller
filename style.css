@@ -6,7 +6,7 @@
 
 body {
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #ff0a0e 0%, #764ba2 100%);
     min-height: 100vh;
 }
 
@@ -16,11 +16,11 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    padding: 20px;
+    padding: 10px;
 }
 
 .auth-box {
-    background: white;
+    background: rgb(23, 232, 255);
     border-radius: 20px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     width: 100%;
@@ -30,7 +30,7 @@ body {
 
 .auth-title {
     text-align: center;
-    color: #2c3e50;
+    color: #000000;
     margin-bottom: 30px;
     font-size: 24px;
 }
@@ -44,7 +44,7 @@ body {
 }
 
 .auth-form h2 {
-    color: #2c3e50;
+    color: #000000;
     margin-bottom: 20px;
     text-align: center;
 }
@@ -56,7 +56,7 @@ body {
 .form-group label {
     display: block;
     margin-bottom: 5px;
-    color: #555;
+    color: #000000;
     font-weight: 500;
 }
 
@@ -76,7 +76,7 @@ body {
 .form-group select:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: #000000;
 }
 
 .btn {
@@ -92,7 +92,7 @@ body {
 
 .btn-primary {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
+    color: rgb(255, 255, 255);
 }
 
 .btn-primary:hover {
@@ -348,7 +348,7 @@ tr:hover {
 
 /* Predictor Styles */
 .predictor-card {
-    background: white;
+    background: rgb(245, 243, 243);
     border-radius: 15px;
     padding: 30px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
